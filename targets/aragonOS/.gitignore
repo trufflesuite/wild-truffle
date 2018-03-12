@@ -1,0 +1,13 @@
+node_modules/
+npm-debug.log
+build/
+docker_home/
+test-*
+tmp-*
+coverage/
+coverageEnv/
+coverage.json
+scTopics
+functions.csv
+artifacts/
+allFiredEvents
