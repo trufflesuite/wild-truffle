@@ -1,11 +1,12 @@
 {
-  "name": "meta-ci",
+  "name": "wild-truffle",
   "version": "1.0.0",
   "description": "Experiment: multi-repo CI using meta",
   "main": "index.js",
   "scripts": {
     "ci": "./scripts/ci.sh",
     "install:ci": "./scripts/install_CI.sh",
+    "install:local": "./scripts/install_local.sh",
     "test": "ZEPPELIN=true ./scripts/test.sh",
     "test:zeppelin": "ZEPPELIN=true ./scripts/test.sh",
     "test:aragon": "ARAGON=true ./scripts/test.sh",
@@ -16,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cgewecke/meta-ci.git"
+    "url": "git+https://github.com/trufflesuite/wild-truffle.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cgewecke/meta-ci/issues"
+    "url": "https://github.com/trufflesuite/wild-truffle.git"
   },
-  "homepage": "https://github.com/cgewecke/meta-ci#readme",
+  "homepage": "https://github.com/trufflesuite/wild-truffle#README.md",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
