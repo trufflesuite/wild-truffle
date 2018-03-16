@@ -46,6 +46,9 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    *)
+    shift
+    ;;
 esac
 done
 
