@@ -24,15 +24,30 @@ WILD=$(git rev-parse --abbrev-ref HEAD)
 EXISTS=$(git ls-remote --heads git@github.com:trufflesuite/wild-truffle.git $WILD | wc -l)
 
 # Set default truffle branch to checkout
-BRANCH="develop"
-
-# Set to check branch to command line arg if present
-if ! [ -z $1 ]; then
-  BRANCH=$1
-fi
+TRUFFLE_BRANCH="develop"
+GANACHE_BRANCH="develop"
 
 # Write truffle branch we should checkout in CI
-printf "TRUFFLE_BRANCH=\"$BRANCH\"" > .wildtruffle
+printf "TRUFFLE_BRANCH=\"$TRUFFLE_BRANCH\"" > .wildtruffle
+printf "GANACHE_BRANCH=\"$GANACHE_BRANCH\"" > .wildganache
+
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -t|--truffle)
+    TRUFFLE_BRANCH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -g|--ganache)
+    GANACHE_BRANCH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+esac
+done
 
 # Make sure git thinks we changed something
 date +%s > .dirty
@@ -46,7 +61,7 @@ echo "Committing..."
 echo ""
 
 git add -A
-git commit -a -m "Truffle branch \"$BRANCH\" at $TIME_ID"
+git commit -a -m "Truffle: \"$TRUFFLE_BRANCH\", Ganache: \"$GANACHE_BRANCH\" at $TIME_ID"
 
 # Push
 echo ""

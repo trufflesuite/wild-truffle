@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
 # Installs wild-truffle and its targets on a local environment, at a specified
 # branch. Defaults to 'develop'
 #
@@ -20,7 +18,6 @@ patchBigNumber(){
 # Install wild-truffle
 echo "Installing wild-truffle ..."
 npm install
-
 
 echo ""
 echo "Installing zeppelin-solidity ..."
@@ -56,22 +53,35 @@ echo ""
 echo "Installing meta dependencies ..."
 echo ""
 
-# Load TRUFFLE_BRANCH variable
-# Set default truffle branch to checkout
 TRUFFLE_BRANCH="develop"
+GANACHE_BRANCH="develop"
 
-# Set to check branch to command line arg if present
-if ! [ -z $1 ]; then
-  TRUFFLE_BRANCH=$1
-fi
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -t|--truffle)
+    TRUFFLE_BRANCH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -g|--ganache)
+    GANACHE_BRANCH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+esac
+done
 
 echo ""
-echo "Installing and linking branch: $TRUFFLE_BRANCH ..."
+echo "Installing and linking Truffle: $TRUFFLE_BRANCH Ganache: $GANACHE_BRANCH ..."
 echo ""
 
 # Run `meta` setup
 meta git update
 meta git checkout $TRUFFLE_BRANCH
+meta git checkout $GANACHE_BRANCH
 meta npm install
 meta npm symlink
 
