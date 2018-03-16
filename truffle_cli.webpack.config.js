@@ -7,7 +7,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpack = require('webpack');
 var pkg = require("./package.json");
 
-var outputDir = path.join(__dirname, "build");
+var outputDir = path.join(__dirname, "truffle_build");
 var outputFilename = 'cli.bundled.js';
 
 module.exports = {

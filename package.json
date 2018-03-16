@@ -12,8 +12,9 @@
     "test:aragon": "ARAGON=true ./scripts/test.sh",
     "test:colony": "COLONY=true ./scripts/test.sh",
     "test:ci": "./scripts/test.sh",
-    "build": "npm run build-cli",
-    "build-cli": "webpack --config ./cli.webpack.config.js"
+    "build": "npm run build-cli-truffle",
+    "build-cli-truffle": "webpack --config ./truffle_cli.webpack.config.js",
+    "build-cli-ganache": "webpack --config ./ganache_cli.webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,6 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
-    "ganache-cli": "6.1.0-beta.4",
     "fs-extra": "^4.0.0",
     "js-scrypt": "^0.2.0",
     "meta-npm": "^0.0.22",

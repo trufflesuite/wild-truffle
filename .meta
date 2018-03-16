@@ -1,5 +1,6 @@
 {
   "projects": {
+    "dependencies/ganache-core": "https://github.com/trufflesuite/ganache-core.git",
     "dependencies/truffle-artifactor": "https://github.com/trufflesuite/truffle-artifactor.git",
     "dependencies/truffle-blockchain-utils": "https://github.com/trufflesuite/truffle-blockchain-utils.git",
     "dependencies/truffle-box": "https://github.com/trufflesuite/truffle-box.git",

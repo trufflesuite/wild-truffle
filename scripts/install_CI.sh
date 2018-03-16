@@ -64,14 +64,16 @@ echo ""
 
 # Load TRUFFLE_BRANCH variable
 source .wildtruffle
+source .wildganache
 
 echo ""
-echo "Checking out $TRUFFLE_BRANCH ..."
+echo "Checking out Truffle @ $TRUFFLE_BRANCH, Ganache @ $GANACHE_BRANCH ..."
 echo ""
 
 # Run `meta` setup
 meta git update
 meta git checkout $TRUFFLE_BRANCH
+meta git checkout $GANACHE_BRANCH
 meta npm install
 meta npm symlink
 
