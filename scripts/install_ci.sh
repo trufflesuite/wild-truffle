@@ -11,8 +11,10 @@ patchBigNumber(){
   npm install chai-bignumber
 }
 
+echo "TRAVIS: --> $TRAVIS_BRANCH"
+
 # Don't run tests if we're just working on the wild-truffle scripts.
-if [["$TRAVIS_BRANCH" == "develop" || $TRAVIS_BRANCH == "master"]]; then
+if [["$TRAVIS_BRANCH" == "develop" || "$TRAVIS_BRANCH" == "master"]]; then
   exit 0
 fi
 
