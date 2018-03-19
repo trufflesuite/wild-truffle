@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ci": "./scripts/ci.sh",
-    "install:ci": "./scripts/install_CI.sh",
+    "install:ci": "./scripts/install_ci.sh",
     "install:local": "./scripts/install_local.sh",
     "test": "ZEPPELIN=true ./scripts/test.sh",
     "test:zeppelin": "ZEPPELIN=true ./scripts/test.sh",

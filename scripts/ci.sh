@@ -69,6 +69,3 @@ fi
 echo ""
 echo "Running Truffle: \"$TRUFFLE_BRANCH\", Ganache: \"$GANACHE_BRANCH\" on Travis (shortly)."
 echo ""
-"
-echo "Running Truffle: \"$TRUFFLE_BRANCH\", Ganache: \"$GANACHE_BRANCH\" on Travis (shortly)."
-echo ""
