@@ -69,7 +69,7 @@ echo ""
 # Run `meta` setup
 meta git update
 meta git checkout $TRUFFLE_BRANCH
-meta git checkout $GANACHE_BRANCH
+meta pkgs checkout "ganache-core@$GANACHE_BRANCH"
 meta npm install
 meta npm symlink
 
