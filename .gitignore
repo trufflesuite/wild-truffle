@@ -61,5 +61,6 @@ typings/
 dependencies
 
 # webpack
-build
+ganache_build
+truffle_build
 

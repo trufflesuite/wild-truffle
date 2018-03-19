@@ -48,31 +48,19 @@ yarn
 cd ../..
 
 
-# Install truffle dependencies via meta
-echo ""
-echo "Installing meta dependencies ..."
-echo ""
-
+# Set default truffle branch to checkout
 TRUFFLE_BRANCH="develop"
 GANACHE_BRANCH="develop"
 
-while [[ $# -gt 0 ]]
+# Parse cli options
+while getopts 't:g:' key;
 do
-key="$1"
-
-case $key in
-    -t|--truffle)
-    TRUFFLE_BRANCH="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    -g|--ganache)
-    GANACHE_BRANCH="$2"
-    shift # past argument
-    shift # past value
-    ;;
+case "${key}" in
+    t) TRUFFLE_BRANCH="${OPTARG}" ;;
+    g) GANACHE_BRANCH="${OPTARG}" ;;
+    *) echo "Unrecognized arg: ${flag}";;
 esac
-done
+
 
 echo ""
 echo "Installing and linking Truffle: $TRUFFLE_BRANCH Ganache: $GANACHE_BRANCH ..."

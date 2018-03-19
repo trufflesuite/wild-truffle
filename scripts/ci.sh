@@ -4,7 +4,7 @@
 # which `truffle` branch to check out and pushes a throwaway branch
 # to GH, triggering the CI build.
 #
-# usage: $ npm run ci <truffle-branch-to-checkout>
+# usage: $ npm run ci -- [-t <truffle-branch>] [-g <ganache-branch]
 #
 
 # Verify we're not attempting to push to a protected branch

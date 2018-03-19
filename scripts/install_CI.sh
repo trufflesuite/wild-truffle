@@ -11,6 +11,11 @@ patchBigNumber(){
   npm install chai-bignumber
 }
 
+# Don't run tests if we're just working on the scripts themselves
+if [["$TRAVIS_BRANCH" == "develop" || $TRAVIS_BRANCH == "master"]]; then
+  exit 0
+fi
+
 # Install wild-truffle
 echo "Installing wild-truffle ..."
 npm install -g yarn
@@ -25,10 +30,8 @@ if [ "$ZEPPELIN" = true ]; then
   echo ""
 
   cd targets/zeppelin-solidity
-
   npm install
   patchBigNumber
-
   cd ../..
 
 elif [ "$ARAGON" = true ]; then
@@ -38,9 +41,7 @@ elif [ "$ARAGON" = true ]; then
   echo ""
 
   cd targets/aragonOS
-
   npm install
-
   cd ../..
 
 elif [ "$COLONY" = true ]; then
@@ -50,9 +51,7 @@ elif [ "$COLONY" = true ]; then
   echo ""
 
   cd targets/colonyNetwork
-
   yarn
-
   cd ../..
 fi
 

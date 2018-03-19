@@ -7,7 +7,8 @@ set -o errexit
 
 # Build truffle, post branch checkout
 npm run build
-chmod +x build/cli.bundled.js
+chmod +x truffle_build/cli.bundled.js
+chmod +x ganache_build/cli.node.js
 
 # Run unit tests
 if [ "$ZEPPELIN" == true ]; then

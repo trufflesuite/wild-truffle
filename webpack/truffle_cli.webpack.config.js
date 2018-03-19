@@ -5,15 +5,16 @@ var prependFile = require('prepend-file');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpack = require('webpack');
-var pkg = require("./package.json");
+var pkg = require("../package.json");
 
-var outputDir = path.join(__dirname, "truffle_build");
+var projectRoot = path.join(__dirname, "..");
+var outputDir = path.join(__dirname, "..", "truffle_build");
 var outputFilename = 'cli.bundled.js';
 
 module.exports = {
   entry: {
-    cli: path.join(__dirname, "node_modules", "truffle-core", "cli.js"),
-    chain: path.join(__dirname, "node_modules", "truffle-core", "chain.js")
+    cli: path.join(__dirname, "..", "node_modules", "truffle-core", "cli.js"),
+    chain: path.join(__dirname, "..", "node_modules", "truffle-core", "chain.js")
   },
   target: 'node',
   node: {
@@ -68,16 +69,16 @@ module.exports = {
 
     // `truffle test`
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, "node_modules", "truffle-core", "lib", "testing", "Assert.sol") },
-      { from: path.join(__dirname, "node_modules", "truffle-core", "lib", "testing", "SafeSend.sol") },
+      { from: path.join(__dirname, "..", "node_modules", "truffle-core", "lib", "testing", "Assert.sol") },
+      { from: path.join(__dirname, "..", "node_modules", "truffle-core", "lib", "testing", "SafeSend.sol") },
       {
-        from: path.join(__dirname, "node_modules", "truffle-core", "lib", "templates/"),
+        from: path.join(__dirname, "..", "node_modules", "truffle-core", "lib", "templates/"),
         to: "templates",
         flatten: true
       },
     ]),
 
-    new CleanWebpackPlugin(["build"]),
+    new CleanWebpackPlugin(["truffle_build"], projectRoot),
 
     // Make web3 1.0 packable
     new webpack.IgnorePlugin(/^electron$/),
@@ -86,10 +87,10 @@ module.exports = {
     alias: {
       // fsevents is used by chokidar and is an optional requirement
       // It doesn't pack well, and is OS X specific, so let's get rid of it.
-      "fsevents": path.join(__dirname, "./nil.js"),
-      "ws": path.join(__dirname, "./nil.js"),
+      "fsevents": path.join(__dirname, "..", "./nil.js"),
+      "ws": path.join(__dirname, "..", "./nil.js"),
       "scrypt": "js-scrypt",
-      "secp256k1": path.join(__dirname, "node_modules", "secp256k1", "elliptic.js")
+      "secp256k1": path.join(__dirname, "..", "node_modules", "secp256k1", "elliptic.js")
     }
   }
 }

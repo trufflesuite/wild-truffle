@@ -10,29 +10,41 @@ It extends Truffle's scenario testing regime to include an ~800 unit battery tha
 
 ## Use (on [Travis](https://travis-ci.org/trufflesuite/wild-truffle/branches))
 
-Test an experimental Truffle branch (this can span across modules) against the projects listed above on Travis CI and see what breaks. (Does not require `npm install`)
+Test an experimental Truffle branch (may span several modules) against the projects listed above on Travis CI and see what breaks.
 
 ```shell
-git checkout -b <throw-away-branch-name>  # checkout a throw-away branch.
+git clone  https://github.com/trufflesuite/wild-truffle.git # no need to `npm install`
+git checkout -b <throw-away-branch-name>                    # checkout a throw-away branch.
 
-npm run ci <experimental-branch>          # Run the truffle branch in CI (defaults to `develop`).
+# Run truffle and ganache at develop in CI (default)
+npm run ci
+
+# Or run against specific branches
+npm run ci -- -t <truffle-branch> -g <ganache-branch>
 ```
 
 ## Use locally
 
-Install `wild-truffle` locally to debug a target's test failures against a branch. The steps below
-install the Truffle repository with `meta`, as well as the targets. Truffle will be checked out to
-branch you specify.
+Install `wild-truffle` locally to debug a target's test failures against a branch.
 
 ```shell
 npm install -g meta
 npm install -g yarn
 
-npm run install:local <expirmental-branch> # Install at the specified branch (defaults to `develop`)
+# Install truffle and ganache @ `develop`
+npm run install:local
 
-npm run test:zeppelin # Run zeppelin's tests
-npm run test:aragon   # Run aragon's tests
-npm run test:colony   # Run colony's tests
+# Or install at a specific branch (useful if its deps are different)
+npm run install:local -- -t <truffle-branch> -g <ganache-branch>
+
+# Meta is available
+meta checkout <truffle-branch>
+meta checkout <ganache-branch>
+
+# Run some tests
+npm run test:zeppelin
+npm run test:aragon
+npm run test:colony
 ```
 
 
