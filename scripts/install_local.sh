@@ -8,21 +8,11 @@
 #!/usr/bin/env bash
 
 # Installs wild-truffle and its targets on Travis.
+TRUFFLE_BRANCH="next"
 
 # Install wild-truffle
 echo "Installing wild-truffle ..."
 git clone https://github.com/trufflesuite/truffle.git
-
-echo ""
-echo "Installing colonyNetwork ..."
-echo ""
-
-cd targets
-git clone https://github.com/JoinColony/colonyNetwork.git
-cd colonyNetwork
-yarn
-git submodule update --init
-rm -rf .git
 
 # Load TRUFFLE_BRANCH variable
 source .wildtruffle
@@ -36,4 +26,26 @@ echo ""
 cd truffle
 git checkout $TRUFFLE_BRANCH
 npm run bootstrap
-chmod +x truffle/packages/truffle/build/cli.bundled.js
+rm -rf .git
+cd packages/truffle
+npm run build
+chmod +x build/cli.bundled.js
+cd ../../..
+
+echo ""
+echo "Installing colonyNetwork ..."
+echo ""
+
+cd targets
+git clone https://github.com/JoinColony/colonyNetwork.git
+cd colonyNetwork
+yarn
+git submodule update --init
+rm -rf .git
+
+NEWPATH="./../../truffle/packages/truffle/build/cli.bundled.js"
+sed -i.bak "s|truffle|$NEWPATH|g" package.json
+sed -i.bak 's|"test:contracts"|"wildtruffle"|g' package.json
+npm run wildtruffle
+
+

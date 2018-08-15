@@ -64,7 +64,9 @@ dependencies
 ganache_build
 truffle_build
 
-# target package-locks
+# wild-truffle
 targets/*
+truffle
+
 
 
