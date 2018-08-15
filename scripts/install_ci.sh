@@ -2,16 +2,6 @@
 
 # Installs wild-truffle and its targets on Travis.
 
-# Hack: `chai-bignumber` is not recognizing `truffle` bignumbers
-# as instances unless we do this post install for Zeppelin.
-patchBigNumber(){
-  npm uninstall bignumber.js
-  npm uninstall chai-bignumber
-  npm install bignumber.js
-  npm install chai-bignumber
-}
-
-
 # Don't run tests if we're just working on the wild-truffle scripts.
 if [[ "$TRAVIS_BRANCH" == "develop" || "$TRAVIS_BRANCH" == "master" ]]; then
   exit 0
@@ -19,62 +9,44 @@ fi
 
 # Install wild-truffle
 echo "Installing wild-truffle ..."
+docker pull ethereum/solc:0.4.23
 npm install -g yarn
-npm install -g meta
-npm install
+npm install -g lerna
+git clone https://github.com/trufflesuite/truffle.git
 
-# Install matrix target
-if [ "$ZEPPELIN" = true ]; then
-
-  echo ""
-  echo "Installing zeppelin-solidity ..."
-  echo ""
-
-  cd targets/zeppelin-solidity
-  npm install
-  patchBigNumber
-  cd ../..
-
-elif [ "$ARAGON" = true ]; then
-
-  echo ""
-  echo "Installing aragonOS ..."
-  echo ""
-
-  cd targets/aragonOS
-  npm install
-  cd ../..
-
-elif [ "$COLONY" = true ]; then
-
-  echo ""
-  echo "Installing colonyNetwork ..."
-  echo ""
-
-  cd targets/colonyNetwork
-  yarn
-  cd ../..
-fi
-
-
-# Install truffle dependencies via meta
-echo ""
-echo "Installing meta dependencies ..."
-echo ""
+TRUFFLE_BRANCH="next"
 
 # Load TRUFFLE_BRANCH variable
 source .wildtruffle
 source .wildganache
 
 echo ""
-echo "Checking out Truffle @ $TRUFFLE_BRANCH, Ganache @ $GANACHE_BRANCH ..."
+echo "Checking out Truffle @ $TRUFFLE_BRANCH..."
 echo ""
 
-# Run `meta` setup
-meta git update
-meta git checkout $TRUFFLE_BRANCH
-meta pkgs checkout "ganache-core@$GANACHE_BRANCH"
-meta npm install
-meta npm symlink
+cd truffle
+git checkout $TRUFFLE_BRANCH
+npm run bootstrap
+cd packages/truffle
+npm run build
+chmod +x build/cli.bundled.js
+cd ../../..
 
+if [ "$COLONY" = true ]; then
+  echo ""
+  echo "Installing colonyNetwork ..."
+  echo ""
+
+  mkdir targets
+  cd targets
+  git clone https://github.com/JoinColony/colonyNetwork.git
+  cd colonyNetwork
+  yarn
+  git submodule update --init
+
+  NEWPATH="./../../truffle/packages/truffle/build/cli.bundled.js"
+  sed -i.bak "s|truffle|$NEWPATH|g" package.json
+  sed -i.bak 's|"test:contracts"|"wildtruffle"|g' package.json
+  npm run wildtruffle
+fi
 

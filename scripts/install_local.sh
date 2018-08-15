@@ -5,71 +5,47 @@
 #
 # Usage: npm run install:local <experimental-truffle-branch>
 
+#!/usr/bin/env bash
 
-# Hack: `chai-bignumber` is not recognizing `truffle` bignumbers
-# as instances unless we do this post install for Zeppelin.
-patchBigNumber(){
-  npm uninstall bignumber.js
-  npm uninstall chai-bignumber
-  npm install bignumber.js
-  npm install chai-bignumber
-}
+# Installs wild-truffle and its targets on Travis.
+TRUFFLE_BRANCH="next"
 
 # Install wild-truffle
 echo "Installing wild-truffle ..."
-npm install
+git clone https://github.com/trufflesuite/truffle.git
+
+# Load TRUFFLE_BRANCH variable
+source .wildtruffle
+source .wildganache
 
 echo ""
-echo "Installing zeppelin-solidity ..."
+echo "Checking out Truffle @ $TRUFFLE_BRANCH..."
 echo ""
 
-cd targets/zeppelin-solidity
-
-npm install
-patchBigNumber
-
-cd ../..
-
-echo ""
-echo "Installing aragonOS ..."
-echo ""
-
-cd targets/aragonOS
-npm install
-cd ../..
-
+# Run
+cd truffle
+git checkout $TRUFFLE_BRANCH
+npm run bootstrap
+rm -rf .git
+cd packages/truffle
+npm run build
+chmod +x build/cli.bundled.js
+cd ../../..
 
 echo ""
 echo "Installing colonyNetwork ..."
 echo ""
 
-cd targets/colonyNetwork
+cd targets
+git clone https://github.com/JoinColony/colonyNetwork.git
+cd colonyNetwork
 yarn
-cd ../..
+git submodule update --init
+rm -rf .git
+
+NEWPATH="./../../truffle/packages/truffle/build/cli.bundled.js"
+sed -i.bak "s|truffle|$NEWPATH|g" package.json
+sed -i.bak 's|"test:contracts"|"wildtruffle"|g' package.json
+npm run wildtruffle
 
 
-# Set default truffle branch to checkout
-TRUFFLE_BRANCH="develop"
-GANACHE_BRANCH="develop"
-
-# Parse cli options
-while getopts 't:g:' key;
-do
-case "${key}" in
-    t) TRUFFLE_BRANCH="${OPTARG}" ;;
-    g) GANACHE_BRANCH="${OPTARG}" ;;
-    *) echo "Unrecognized arg: ${flag}";;
-esac
-done
-
-
-echo ""
-echo "Installing and linking Truffle: $TRUFFLE_BRANCH Ganache: $GANACHE_BRANCH ..."
-echo ""
-
-# Run `meta` setup
-meta git update
-meta git checkout $TRUFFLE_BRANCH
-meta pkgs checkout "ganache-core@$GANACHE_BRANCH"
-meta npm install
-meta npm symlink
