@@ -13,6 +13,6 @@ set -o errexit
 # Run unit tests
 if [ "$COLONY" == true ]; then
   cd targets/colonyNetwork
-  npm run test:contracts
+  npm run wildtruffle
   cd ../..
 fi

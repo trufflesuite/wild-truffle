@@ -9,9 +9,12 @@ fi
 
 # Install wild-truffle
 echo "Installing wild-truffle ..."
+docker pull ethereum/solc:0.4.23
 npm install -g yarn
 npm install -g lerna
 git clone https://github.com/trufflesuite/truffle.git
+
+TRUFFLE_BRANCH="next"
 
 # Load TRUFFLE_BRANCH variable
 source .wildtruffle
@@ -34,6 +37,7 @@ if [ "$COLONY" = true ]; then
   echo "Installing colonyNetwork ..."
   echo ""
 
+  mkdir targets
   cd targets
   git clone https://github.com/JoinColony/colonyNetwork.git
   cd colonyNetwork

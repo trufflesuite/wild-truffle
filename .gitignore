@@ -65,7 +65,7 @@ ganache_build
 truffle_build
 
 # wild-truffle
-targets/*
+targets/colonyNetwork
 truffle
 
 
