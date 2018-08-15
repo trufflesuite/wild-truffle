@@ -65,8 +65,6 @@ ganache_build
 truffle_build
 
 # target package-locks
-targets/aragonOS/package-lock.json
-targets/zeppelin-solidity/package.json
-targets/zeppelin-solidity/package-lock.json
+targets/*
 
 

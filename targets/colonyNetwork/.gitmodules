@@ -1,3 +1,0 @@
-[submodule "lib/dappsys"]
-	path = lib/dappsys
-	url = git@github.com:dapphub/dappsys-monolithic.git

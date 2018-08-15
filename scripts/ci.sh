@@ -24,7 +24,7 @@ WILD=$(git rev-parse --abbrev-ref HEAD)
 EXISTS=$(git ls-remote --heads git@github.com:trufflesuite/wild-truffle.git $WILD | wc -l)
 
 # Set default truffle branch to checkout
-TRUFFLE_BRANCH="develop"
+TRUFFLE_BRANCH="next"
 GANACHE_BRANCH="develop"
 
 while getopts 't:g:' key;
@@ -52,7 +52,7 @@ echo "Committing..."
 echo ""
 
 git add -A
-git commit -a -m "Truffle: \"$TRUFFLE_BRANCH\", Ganache: \"$GANACHE_BRANCH\" at $TIME_ID"
+git commit -a -m "Truffle: \"$TRUFFLE_BRANCH\" at $TIME_ID"
 
 # Push
 echo ""
@@ -67,5 +67,5 @@ fi
 
 # Goodbye
 echo ""
-echo "Running Truffle: \"$TRUFFLE_BRANCH\", Ganache: \"$GANACHE_BRANCH\" on Travis (shortly)."
+echo "Running Truffle: \"$TRUFFLE_BRANCH\" on Travis (shortly)."
 echo ""
