@@ -3,7 +3,7 @@
 
 `wild-truffle` runs unpublished Truffle changes against existing commercial Truffle projects. At
 the moment it validates Truffle V5 and has a single target. Targets are cloned per test and their
-invocation of truffle in `package.json` is aliased to the `bundled.cli.js` of the installed branch.
+invocation of truffle in `package.json` is aliased to the `cli.bundled.js` of the installed branch.
 + [colonyNetwork](https://github.com/JoinColony/colonyNetwork)
 
 ## Use (on [Travis](https://travis-ci.org/trufflesuite/wild-truffle/branches))
