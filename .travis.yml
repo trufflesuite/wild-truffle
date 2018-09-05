@@ -5,7 +5,7 @@ language: node_js
 services:
   - docker
 node_js:
-  - "8"
+  - "9"
 env:
   - COLONY=true
 install:
