@@ -31,6 +31,9 @@ npm install -g yarn
 # Install truffle and targets at next
 npm run install:local
 
+# Or install at a specific truffle branch
+npm run install:local -- -t <truffle-branch>
+
 # Run colonyNetwork tests
 npm run test:colony
 ```
