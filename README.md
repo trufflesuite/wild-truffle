@@ -26,7 +26,6 @@ npm run ci -- -t <truffle-branch>
 Install `wild-truffle` locally to debug a target's test failures against a branch.
 
 ```shell
-npm install -g meta
 npm install -g yarn
 
 # Install truffle and targets at next
@@ -34,6 +33,7 @@ npm run install:local
 
 # Run colonyNetwork tests
 npm run test:colony
+```
 
 
 
