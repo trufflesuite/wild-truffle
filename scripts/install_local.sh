@@ -3,7 +3,7 @@
 # Installs wild-truffle and its targets on a local environment, at a specified
 # branch. Defaults to 'develop'
 #
-# Usage: npm run install:local <experimental-truffle-branch>
+# Usage: npm run install:local -- -t <experimental-truffle-branch>
 
 #!/usr/bin/env bash
 
@@ -14,9 +14,14 @@ TRUFFLE_BRANCH="next"
 echo "Installing wild-truffle ..."
 git clone https://github.com/trufflesuite/truffle.git
 
-# Load TRUFFLE_BRANCH variable
-source .wildtruffle
-source .wildganache
+while getopts 't:g:' key;
+do
+case "${key}" in
+    t) TRUFFLE_BRANCH="${OPTARG}" ;;
+    g) GANACHE_BRANCH="${OPTARG}" ;;
+    *) echo "Unrecognized arg: ${flag}";;
+esac
+done
 
 echo ""
 echo "Checking out Truffle @ $TRUFFLE_BRANCH..."
@@ -36,6 +41,7 @@ echo ""
 echo "Installing colonyNetwork ..."
 echo ""
 
+mkdir targets
 cd targets
 git clone https://github.com/JoinColony/colonyNetwork.git
 cd colonyNetwork
